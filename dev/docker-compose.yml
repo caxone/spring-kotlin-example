@@ -1,0 +1,10 @@
+name: ahi-tutorial
+services:
+    mysql:
+      container_name: 'tutorial-mysql'
+      image: 'mysql:latest'
+      environment:
+        - 'MYSQL_DATABASE=tutorial'
+        - 'MYSQL_ROOT_PASSWORD=Pass475866'
+      ports:
+        - '3306:3306'

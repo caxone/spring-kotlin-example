@@ -1,0 +1,64 @@
+import com.adarshr.gradle.testlogger.theme.ThemeType
+
+plugins {
+	id 'org.jetbrains.kotlin.jvm' version '1.9.25'
+	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
+	id 'org.springframework.boot' version '3.3.5'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.25'
+	id 'com.adarshr.test-logger' version '4.0.0'
+}
+
+group = 'br.com.ahi'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:mysql'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	testImplementation 'io.kotest:kotest-runner-junit5-jvm:5.9.1' // Módulo principal de execução com JUnit5
+	testImplementation 'io.kotest:kotest-assertions-core-jvm:5.9.1' // Módulo de assertions
+	testImplementation 'io.kotest:kotest-property-jvm:5.9.1' // Suporte a testes de propriedades (opcional)
+	testImplementation 'io.kotest:kotest-extensions-spring:4.4.3' // Suporte a testes de propriedades (opcional)
+}
+
+kotlin {
+	compilerOptions {
+		freeCompilerArgs.addAll '-Xjsr305=strict'
+	}
+}
+
+allOpen {
+	annotation 'jakarta.persistence.Entity'
+	annotation 'jakarta.persistence.MappedSuperclass'
+	annotation 'jakarta.persistence.Embeddable'
+}
+
+test {
+	useJUnitPlatform()
+
+	testlogger {
+		theme ThemeType.MOCHA
+		slowThreshold 5000
+	}
+}

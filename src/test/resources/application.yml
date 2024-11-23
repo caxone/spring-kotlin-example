@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+kotest:
+  framework:
+    config:
+      fqn: br.com.ahi.tutorial.KotestConfig
